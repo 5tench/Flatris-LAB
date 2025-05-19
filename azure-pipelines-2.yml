@@ -16,7 +16,19 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    npm install
+    echo "Installing dependencies..."
+    npm ci
+
+    echo "Running build..."
     npm run build
-    npm audit fix --force
-  displayName: 'npm install and build'
+
+    echo "Checking for updates..."
+    npm outdated
+
+    echo "Updating packages..."
+    npm update
+
+    echo "Audit for vulnerabilities..."
+    npm audit fix || echo "Non-fixable issues remain"
+
+  displayName: 'Install, Build, and Update Packages'
